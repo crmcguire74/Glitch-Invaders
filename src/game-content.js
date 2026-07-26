@@ -55,7 +55,7 @@ export function createArcadeCabinet(chapter, index) {
   const marquee=mesh(new RoundedBoxGeometry(2.48,.62,1.18,5,.09),glow(chapter.color,1.7),g,[0,1.78,.02],[-.05,0,0]);
   mesh(new THREE.PlaneGeometry(2.12,.42),new THREE.MeshBasicMaterial({map:textTexture(chapter),toneMapped:false}),marquee,[0,0,.6]);
   const screenFrame=mesh(new RoundedBoxGeometry(2.08,1.42,.28,5,.09),physical(0x050608,0x000000,0,.5,.78),g,[0,.67,.46],[-.11,0,0]);
-  const screenMat=new THREE.MeshStandardMaterial({map:textTexture(chapter),emissiveMap:textTexture(chapter),emissive:chapter.color,emissiveIntensity:.62,roughness:.2});
+  const screenTexture=textTexture(chapter);const screenMat=new THREE.MeshStandardMaterial({map:screenTexture,emissiveMap:screenTexture,emissive:chapter.color,emissiveIntensity:.62,roughness:.2});
   const screen=mesh(new RoundedBoxGeometry(1.76,1.13,.08,10,.16),screenMat,screenFrame,[0,0,.175]);screen.name='screen';
   mesh(new RoundedBoxGeometry(1.82,1.18,.035,10,.17),MAT.glass,screenFrame,[0,0,.225]);
   const deck=mesh(new RoundedBoxGeometry(2.22,.22,.9,5,.08),physical(0x191b25,0x030409,.15,.25,.78),g,[0,-.25,.72],[-.12,0,0]);
@@ -86,12 +86,14 @@ export function createPlayerCraft() {
 }
 
 function alienDrone(color) {
-  const g=new THREE.Group();const armor=physical(0x2c3240,color,.75,.18,.86),bio=physical(0x2d1737,color,1.2,.3,.35),eye=glow(0xff315d,2.8);
-  mesh(new THREE.DodecahedronGeometry(.58,1),armor,g,[0,0,0],[0,0,Math.PI/4],[1.25,.6,.92]);
+  const g=new THREE.Group();const armor=physical(0x17222c,color,.5,.14,.94),bio=physical(0x321832,0x65194f,.65,.38,.26),eye=glow(0x7dfff2,3.6),blade=physical(0x8ca7af,color,.35,.1,.98);
+  const core=mesh(new THREE.DodecahedronGeometry(.58,1),armor,g,[0,0,0],[0,0,Math.PI/4],[1.25,.6,.92]);mesh(new THREE.TorusGeometry(.5,.035,8,32),glow(color,1.9),core,[0,0,0],[Math.PI/2,0,0],[1.25,1,1]);
   mesh(new THREE.SphereGeometry(.34,24,16),MAT.glass,g,[0,.12,-.28],[0,0,0],[1.25,.55,.6]);
-  for(const x of [-.78,.78]){mesh(new THREE.SphereGeometry(.42,18,12),bio,g,[x,.02,.06],[0,0,0],[1.2,.28,.78]);mesh(new THREE.ConeGeometry(.12,.55,8),armor,g,[x*1.3,-.08,.1],[0,0,x>0?-1.1:1.1]);}
-  for(const x of [-.2,.2])mesh(new THREE.SphereGeometry(.075,16,10),eye,g,[x,.1,-.55]);
+  for(const x of [-.78,.78]){const wing=mesh(new THREE.SphereGeometry(.42,22,14),bio,g,[x,.02,.06],[0,0,x*.18],[1.32,.24,.82]);mesh(new THREE.BoxGeometry(.78,.045,.16),blade,wing,[x>0?.32:-.32,.08,.08],[0,x>0?.12:-.12,x>0?-.18:.18]);mesh(new THREE.ConeGeometry(.1,.62,10),blade,g,[x*1.33,-.08,.1],[0,0,x>0?-1.1:1.1]);}
+  for(const x of [-.2,.2])mesh(new THREE.SphereGeometry(.078,18,12),eye,g,[x,.11,-.56]);
   for(const x of [-.62,-.2,.2,.62])tube([new THREE.Vector3(x,-.12,.15),new THREE.Vector3(x*1.12,-.5,.18),new THREE.Vector3(x*.8,-.82,-.03)],.035,bio,g);
+  for(const x of [-.35,.35])tube([new THREE.Vector3(x,.2,-.24),new THREE.Vector3(x*1.45,.55,-.45),new THREE.Vector3(x*1.7,.38,-.68)],.022,blade,g);
+  mesh(new THREE.ConeGeometry(.16,.48,12),glow(color,2.7),g,[0,.02,.62],[Math.PI/2,0,0]);
   return g;
 }
 function asteroid(size=1,color=0xffb65c) {
@@ -141,11 +143,11 @@ function lamp(parent,x,z,color) { const pole=mesh(new THREE.CylinderGeometry(.05
 export function createEnvironment(chapter, texture, renderer) {
   const g=new THREE.Group();g.name=`world-${chapter.key}`;const animated=[];
   texture.colorSpace=THREE.SRGBColorSpace;texture.wrapS=THREE.RepeatWrapping;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
-  const skyMat=new THREE.MeshBasicMaterial({map:texture,side:THREE.BackSide,transparent:true,opacity:0,fog:false,toneMapped:false});const sky=mesh(new THREE.SphereGeometry(38,64,32),skyMat,g,[0,6,-2],[0,Math.PI/2,0],[-1,1,1]);sky.name='world-sky';
+  const skyMat=new THREE.MeshBasicMaterial({map:texture,side:THREE.BackSide,transparent:true,opacity:0,fog:false,toneMapped:false});const sky=mesh(new THREE.SphereGeometry(38,64,32),skyMat,g,[0,6,-2],[0,-Math.PI/2,0],[-1,1,1]);sky.name='world-sky';
   const baseColor={space:0x030710,asteroids:0x151311,crossing:0x07191d,centipede:0x10170b,tapper:0x2a170e,dig:0x27190f,jungle:0x12200c,brawler:0x151017,cube:0x0e0b1d}[chapter.key]||0x080b12;
-  const ground=mesh(new THREE.CircleGeometry(18,72),new THREE.MeshPhysicalMaterial({color:baseColor,roughness:chapter.key==='crossing'?.18:.68,metalness:chapter.key==='space'||chapter.key==='cube'?.64:.14,clearcoat:chapter.key==='crossing'?1:.3,transparent:true,opacity:.94}),g,[0,-.035,-2],[-Math.PI/2,0,0]);ground.receiveShadow=true;
+  const ground=mesh(new THREE.CircleGeometry(18,72),new THREE.MeshPhysicalMaterial({color:baseColor,emissive:new THREE.Color(chapter.color).multiplyScalar(.045),emissiveIntensity:.58,roughness:chapter.key==='crossing'?.18:.68,metalness:chapter.key==='space'||chapter.key==='cube'?.64:.14,clearcoat:chapter.key==='crossing'?1:.3,transparent:true,opacity:.94}),g,[0,-.035,-2],[-Math.PI/2,0,0]);ground.receiveShadow=true;
   const rim=mesh(new THREE.TorusGeometry(12,.08,10,96),glow(chapter.color,1.2),g,[0,.02,-2],[-Math.PI/2,0,0]);animated.push({mesh:rim,type:'spin',speed:.08});
-  if(chapter.key==='space'){for(let i=0;i<22;i++){const p=mesh(new THREE.TetrahedronGeometry(.2+Math.random()*.55),i%3?MAT.chrome:glow(chapter.accent,.8),g,[(Math.random()-.5)*24,1+Math.random()*8,-14+Math.random()*23]);p.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3);animated.push({mesh:p,type:'float',base:p.position.y,phase:Math.random()*6,speed:.5+Math.random()});}for(const x of [-5.4,5.4])mesh(new RoundedBoxGeometry(3.4,.8,1.2,6,.18),physical(0x172238,chapter.color,.3,.22,.86),g,[x,.42,-4]);}
+  if(chapter.key==='space'){for(let i=0;i<22;i++){const p=mesh(new THREE.TetrahedronGeometry(.2+Math.random()*.55),i%3?MAT.chrome:glow(chapter.accent,.8),g,[(Math.random()-.5)*24,1+Math.random()*8,-14+Math.random()*23]);p.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3);animated.push({mesh:p,type:'float',base:p.position.y,phase:Math.random()*6,speed:.5+Math.random()});}for(const x of [-5.6,0,5.6]){const bunker=mesh(new RoundedBoxGeometry(3.2,.8,1.18,6,.18),physical(0x172238,chapter.color,.72,.2,.86),g,[x,.42,-1.1]);mesh(new RoundedBoxGeometry(2.35,.18,.16,4,.04),glow(chapter.color,1.8),bunker,[0,.23,-.6]);for(const side of [-1,1])mesh(new THREE.BoxGeometry(.28,.55,.32),MAT.chrome,bunker,[side*1.28,.08,-.45],[0,0,side*.25]);}}
   if(chapter.key==='asteroids'){for(let i=0;i<20;i++){const p=asteroid(.35+Math.random()*.8,chapter.color);p.position.set((Math.random()-.5)*25,.3+Math.random()*8,-14+Math.random()*25);p.rotation.set(Math.random()*4,Math.random()*4,Math.random()*4);g.add(p);animated.push({mesh:p,type:'tumble',speed:.08+Math.random()*.24});}for(const x of [-7,7]){const tower=mesh(new THREE.CylinderGeometry(.5,.85,5,16),physical(0x343943,0xff9a3f,.18,.7,.55),g,[x,2.5,-5]);mesh(new THREE.TorusGeometry(1.2,.08,8,36),glow(chapter.color,1),tower,[0,1.8,0],[Math.PI/2,0,0]);}}
   if(chapter.key==='crossing'){for(let lane=0;lane<5;lane++){const z=5-lane*2.6;mesh(new RoundedBoxGeometry(22,.08,1.7,4,.04),physical(lane<2?0x20252a:0x061d24,0x000000,0,lane<2?.48:.16,lane<2?.3:.65),g,[0,.01,z]);for(const x of [-10.5,10.5])lamp(g,x,z,lane<2?0xff9b4a:0x5cf5ff);}for(const z of [-2.8,-5.4,-8]){const log=mesh(new THREE.CylinderGeometry(.32,.42,3.2,14),new THREE.MeshStandardMaterial({color:0x4a2b18,roughness:.95}),g,[(Math.random()-.5)*8,.25,z],[0,0,Math.PI/2]);animated.push({mesh:log,type:'lane',speed:(Math.random()>.5?1:-1)*(1.2+Math.random()),limit:11});}}
   if(chapter.key==='centipede'){for(let i=0;i<34;i++)mushroom(g,(Math.random()-.5)*19,-10+Math.random()*18,i%3?chapter.color:chapter.accent,.55+Math.random()*.8);for(const x of [-8,8])tube([new THREE.Vector3(x,0,-10),new THREE.Vector3(x*.7,4,-2),new THREE.Vector3(x,7,7)],.25,new THREE.MeshStandardMaterial({color:0x28371b,roughness:.95}),g);}
