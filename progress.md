@@ -8,6 +8,11 @@ Original prompt: Build a new virtual reality WebXR game called “Glitch Invader
 - Confirmed the gameplay chain from movement and firing through hit detection, enemy removal, score increment, combo, and glitch charge. Removed the unsupported-WebXR button that overlapped the objective in non-XR browsers.
 - Playwright phase captures verified falling blocks, race traffic, pinball ricochets, glitch-pulse visuals, the animated serpent body/boss HUD, boss damage, the victory screen, game-over, and pause/resume state. No console/page errors were emitted.
 - Direct browser control checks verified Shift dash, G pulse, P pause/resume, and F fullscreen. Final death-state and pause regressions are clean.
+- Iteration 2: hardened input focus and document-level key capture, added XR thumbstick locomotion and XR dash-button polling, visible engine thrust/shield feedback, and a two-step movement/fire calibration that blocks spawns until controls are proven.
+- Added an always-available gameplay control ribbon and H-key field manual.
+- Visual upgrade pass: animated signal-floor shader, dimensional reactor with kinetic rings/shards, architectural cabinet bays, animated corruption conduits, higher-detail cabinets, engine flames/shield, richer ghosts/cars/blocks/pinballs/serpent geometry, and a vignette/chromatic/grain cinema pass.
+- Added a headset-visible 3D calibration panel and two-controller trigger rays so instructions are not limited to desktop DOM overlays.
+- Final visual reviews covered the title, tutorial, field manual, every genre phase, pause, game-over, and victory screens. WASD movement reached `x=-6.96`; pointer-start + focused movement reached `x=-2.45`; firing damaged the boss; the tutorial completed into live combat; no console/page errors were produced.
 
 ## TODO
 - Hardware-only follow-up: check comfort, scale, and controller feel in the intended WebXR headset; immersive sessions are not available in the headless test environment.

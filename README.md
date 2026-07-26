@@ -17,9 +17,12 @@ Open the printed local URL. When an immersive WebXR headset is available, an **E
 - `Space` / click / XR trigger — fire
 - `Shift` — dash
 - `G` — release a fully charged glitch pulse
+- `H` — open the in-game field manual
 - `P` / `Enter` — pause or resume
 - `F` — toggle fullscreen
 - `R` — restart after a completed run
+
+In WebXR, use the left thumbstick to move, either trigger to fire, and a face button to dash. A headset-visible calibration panel appears before enemies spawn.
 
 ## Build
 

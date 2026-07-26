@@ -38,6 +38,33 @@
           <div class="glitch-ring" id="glitch-ring"><span id="glitch-value">0</span></div>
         </div>
         <div class="objective" id="objective">PURGE THE MAZE SIGNAL</div>
+        <div class="control-ribbon" id="control-ribbon">
+          <span><kbd>WASD</kbd> MOVE</span><span><kbd>SPACE</kbd> FIRE</span>
+          <span><kbd>SHIFT</kbd> DASH</span><span><kbd>G</kbd> PULSE</span>
+        </div>
+        <button id="help-chip" class="help-chip" type="button">H // CONTROLS</button>
+      </section>
+
+      <section id="tutorial" class="tutorial hidden" aria-live="assertive">
+        <div class="tutorial-index" id="tutorial-index">CALIBRATION 01 / 02</div>
+        <div class="tutorial-key" id="tutorial-key">WASD</div>
+        <div>
+          <h3 id="tutorial-title">MOVE TO CALIBRATE</h3>
+          <p id="tutorial-copy">Use WASD, arrow keys, or the left XR thumbstick.</p>
+          <div class="tutorial-progress"><i id="tutorial-progress"></i></div>
+        </div>
+      </section>
+
+      <section id="control-manual" class="control-manual hidden">
+        <div class="manual-head"><span>FIELD MANUAL // LIVE INPUT</span><button id="close-help" type="button">CLOSE ×</button></div>
+        <div class="manual-grid">
+          <article><kbd>WASD</kbd><b>MOVE</b><p>Strafe across the arena. XR uses the left thumbstick.</p></article>
+          <article><kbd>SPACE</kbd><b>FIRE</b><p>Hold Space, click, or squeeze either XR trigger.</p></article>
+          <article><kbd>SHIFT</kbd><b>DASH</b><p>Burst through danger with brief invulnerability.</p></article>
+          <article><kbd>G</kbd><b>GLITCH PULSE</b><p>At 100 charge, erase nearby threats and damage bosses.</p></article>
+          <article><kbd>P / ENTER</kbd><b>PAUSE</b><p>Suspend or resume the current breach.</p></article>
+          <article><kbd>F</kbd><b>FULLSCREEN</b><p>Toggle the desktop simulation display.</p></article>
+        </div>
       </section>
 
       <section id="transmission" class="transmission hidden">
