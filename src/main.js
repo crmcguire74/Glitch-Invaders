@@ -59,7 +59,8 @@ camera.position.set(0, 10.5, 15.5);
 camera.lookAt(0, 0, -1.4);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8));
+const automatedCapture = navigator.webdriver === true;
+renderer.setPixelRatio(automatedCapture ? 1 : Math.min(devicePixelRatio, 1.8));
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -250,10 +251,14 @@ function finish(won, source='the breach') {
 }
 
 function resetGame() {
-  clearDynamic(); Object.assign(state,{mode:'playing',time:0,phase:0,phaseKills:0,phaseTime:0,score:0,health:100,glitch:0,combo:0,comboTimer:0,shotCooldown:0,dashCooldown:0,invulnerable:0,spawnTimer:.35,messageTimer:0,shake:0,flash:0,bossHp:100});
+  const params = new URLSearchParams(location.search);
+  const requestedPhase = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('phase')) || 0, 0, 4) : 0;
+  const requestedGlitch = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('glitch')) || 0, 0, 100) : 0;
+  clearDynamic(); Object.assign(state,{mode:'playing',time:0,phase:requestedPhase,phaseKills:0,phaseTime:0,score:0,health:100,glitch:requestedGlitch,combo:0,comboTimer:0,shotCooldown:0,dashCooldown:0,invulnerable:0,spawnTimer:.35,messageTimer:0,shake:0,flash:0,bossHp:100});
   Object.assign(state.player,{x:0,z:5.5,vx:0,vz:0}); playerMesh.position.set(0,.48,5.5); playerMesh.visible=true;
   ui.title.classList.add('hidden'); ui.end.classList.add('hidden'); ui.pause.classList.add('hidden'); ui.hud.classList.remove('hidden');
-  showTransmission('Mara here. The cabinets are cross-wired. Learn their rules before they learn you.',4.8); updateUI();
+  if (requestedPhase === 4) addEntity('serpent',0,-8,{y:1.05});
+  showTransmission(requestedPhase === 0 ? 'Mara here. The cabinets are cross-wired. Learn their rules before they learn you.' : phases[requestedPhase].story,4.8); updateUI();
 }
 
 function spawnForPhase() {
@@ -333,7 +338,7 @@ function update(dt){
 
 const baseCamera = new THREE.Vector3(0,10.5,15.5);
 function render(){
-  if(!renderer.xr.isPresenting){camera.position.copy(baseCamera);if(state.shake>0){camera.position.x+=(Math.random()-.5)*state.shake;camera.position.y+=(Math.random()-.5)*state.shake*.45;}camera.lookAt(state.player.x*.12,0,-1.4);composer.render();}
+  if(!renderer.xr.isPresenting){camera.position.copy(baseCamera);if(state.shake>0){camera.position.x+=(Math.random()-.5)*state.shake;camera.position.y+=(Math.random()-.5)*state.shake*.45;}camera.lookAt(state.player.x*.12,0,-1.4);if(automatedCapture)renderer.render(scene,camera);else composer.render();}
   else renderer.render(scene,camera);
   renderer.domElement.style.filter=state.flash>0?`brightness(${1+state.flash*1.2}) saturate(${1+state.flash})`:'';
 }
@@ -364,6 +369,6 @@ const controller=renderer.xr.getController(0);controller.addEventListener('selec
 const ray=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3(0,0,-1)]),new THREE.LineBasicMaterial({color:0x54f6ff}));ray.scale.z=3;controller.add(ray);
 renderer.xr.addEventListener('sessionstart',()=>{if(camera.parent!==xrRig)xrRig.add(camera);if(state.mode==='title')resetGame();xrRig.position.set(state.player.x,0,state.player.z);playerMesh.visible=false;ui.title.classList.add('hidden');ui.hud.classList.remove('hidden');});
 renderer.xr.addEventListener('sessionend',()=>{camera.removeFromParent();scene.add(camera);camera.position.copy(baseCamera);playerMesh.visible=true;});
-if(navigator.xr){const vrButton=VRButton.createButton(renderer);vrButton.id='vr-entry';document.body.appendChild(vrButton);navigator.xr.isSessionSupported('immersive-vr').then(ok=>{ui.xrNote.textContent=ok?'WebXR headset detected. Enter VR when ready.':'Desktop simulation ready. WebXR headset not detected.';});}
+if(navigator.xr){navigator.xr.isSessionSupported('immersive-vr').then(ok=>{ui.xrNote.textContent=ok?'WebXR headset detected. Enter VR when ready.':'Desktop simulation ready. WebXR headset not detected.';if(ok){const vrButton=VRButton.createButton(renderer);vrButton.id='vr-entry';document.body.appendChild(vrButton);}});}
 
 updateUI();render();
