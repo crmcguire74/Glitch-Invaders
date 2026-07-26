@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050611" />
+    <meta name="description" content="Glitch Invaders — a WebXR arcade reality breach." />
+    <title>Glitch Invaders</title>
+    <script type="module" crossorigin src="/assets/index-DQv49zIT.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CpxqDkBE.css">
+  </head>
+  <body>
+    <main id="app" aria-label="Glitch Invaders game">
+      <div id="scene" aria-hidden="true"></div>
+
+      <section id="title-screen" class="panel title-screen">
+        <p class="eyebrow">POLYBIUS ARCHIVE // INCIDENT 07</p>
+        <h1><span>GLITCH</span><br />INVADERS</h1>
+        <p class="lede">The cabinets learned each other’s rules.<br />Now the arcade is learning yours.</p>
+        <button id="start-btn" class="primary">BREACH THE ARCADE</button>
+        <div class="controls">
+          <span><b>WASD</b> MOVE</span><span><b>SPACE / CLICK</b> FIRE</span>
+          <span><b>SHIFT</b> DASH</span><span><b>G</b> GLITCH PULSE</span>
+          <span><b>P</b> PAUSE</span><span><b>F</b> FULLSCREEN</span>
+        </div>
+        <p id="xr-note">Desktop simulation ready. Headset support will appear when WebXR is available.</p>
+      </section>
+
+      <section id="hud" class="hud hidden" aria-live="polite">
+        <div class="hud-top">
+          <div class="stat"><small>INTEGRITY</small><div class="meter"><i id="health-fill"></i></div></div>
+          <div class="sector"><small id="phase-label">BREACH 01</small><strong id="phase-name">MAZE LEAK</strong></div>
+          <div class="score"><small>SCORE</small><strong id="score-value">000000</strong></div>
+        </div>
+        <div class="crosshair"><i></i></div>
+        <div class="combo hidden" id="combo">CHAIN x2</div>
+        <div class="boss hidden" id="boss-hud"><small>WORLD EATER</small><div class="meter"><i id="boss-fill"></i></div></div>
+        <div class="glitch-widget">
+          <small>GLITCH PULSE <b id="pulse-key">G</b></small>
+          <div class="glitch-ring" id="glitch-ring"><span id="glitch-value">0</span></div>
+        </div>
+        <div class="objective" id="objective">PURGE THE MAZE SIGNAL</div>
+      </section>
+
+      <section id="transmission" class="transmission hidden">
+        <small id="speaker">MARA // NIGHT ATTENDANT</small>
+        <p id="transmission-text"></p>
+      </section>
+
+      <section id="pause-screen" class="panel compact hidden">
+        <p class="eyebrow">SIMULATION SUSPENDED</p><h2>PAUSED</h2>
+        <button id="resume-btn" class="primary">RESUME</button>
+        <button id="restart-pause-btn" class="secondary">RESTART RUN</button>
+      </section>
+
+      <section id="end-screen" class="panel compact hidden">
+        <p class="eyebrow" id="end-eyebrow">REALITY STABILIZED</p>
+        <h2 id="end-title">BREACH SEALED</h2>
+        <p id="end-copy"></p>
+        <div class="final-score"><small>FINAL SCORE</small><strong id="final-score">000000</strong></div>
+        <button id="restart-btn" class="primary">PLAY AGAIN</button>
+      </section>
+
+      <div id="scanlines"></div>
+    </main>
+  </body>
+</html>
