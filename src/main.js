@@ -222,6 +222,7 @@ function destroyEntity(e, byPulse = false) {
   if (e.tail) e.tail.forEach(disposeObject);
   disposeObject(e.mesh);
   if (e.type === 'serpent') { state.phaseKills=1; state.score += 15000; finish(true); return; }
+  if (state.mode !== 'playing') return;
   state.phaseKills++; state.combo++; state.comboTimer=2.5; state.glitch=Math.min(100,state.glitch+(byPulse?4:13));
   state.score += (100 + state.phase * 75) * Math.max(1,state.combo); tone(250 + state.combo*35,.08,'triangle',.03,150);
   if (state.phaseKills >= phases[state.phase].quota) advancePhase();
@@ -255,10 +256,12 @@ function resetGame() {
   const requestedPhase = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('phase')) || 0, 0, 4) : 0;
   const requestedGlitch = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('glitch')) || 0, 0, 100) : 0;
   const requestedBossHp = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('bossHp')) || 100, 1, 100) : 100;
-  clearDynamic(); Object.assign(state,{mode:'playing',time:0,phase:requestedPhase,phaseKills:0,phaseTime:0,score:0,health:100,glitch:requestedGlitch,combo:0,comboTimer:0,shotCooldown:0,dashCooldown:0,invulnerable:0,spawnTimer:.35,messageTimer:0,shake:0,flash:0,bossHp:requestedBossHp});
+  const requestedHealth = automatedCapture ? THREE.MathUtils.clamp(Number(params.get('health')) || 100, 1, 100) : 100;
+  clearDynamic(); Object.assign(state,{mode:'playing',time:0,phase:requestedPhase,phaseKills:0,phaseTime:0,score:0,health:requestedHealth,glitch:requestedGlitch,combo:0,comboTimer:0,shotCooldown:0,dashCooldown:0,invulnerable:0,spawnTimer:.35,messageTimer:0,shake:0,flash:0,bossHp:requestedBossHp});
   Object.assign(state.player,{x:0,z:5.5,vx:0,vz:0}); playerMesh.position.set(0,.48,5.5); playerMesh.visible=true;
   ui.title.classList.add('hidden'); ui.end.classList.add('hidden'); ui.pause.classList.add('hidden'); ui.hud.classList.remove('hidden');
   if (requestedPhase === 4) { const boss = addEntity('serpent',0,-8,{y:1.05}); boss.hp=requestedBossHp; boss.maxHp=100; }
+  if (automatedCapture && params.get('hit') === '1') addEntity('ghost',0,5.5,{y:.72});
   showTransmission(requestedPhase === 0 ? 'Mara here. The cabinets are cross-wired. Learn their rules before they learn you.' : phases[requestedPhase].story,4.8); updateUI();
 }
 
@@ -356,9 +359,9 @@ window.render_game_to_text=()=>JSON.stringify({
   shots:shots.slice(0,12).map(s=>({x:+s.x.toFixed(2),z:+s.z.toFixed(2)})),boss:state.phase===4?{hp:state.bossHp,maxHp:100}:null,paused:state.mode==='paused'
 });
 
-function togglePause(forceResume=false){if(state.mode==='playing'&&!forceResume){state.mode='paused';ui.pause.classList.remove('hidden');ui.hud.classList.add('hidden');}else if(state.mode==='paused'){state.mode='playing';ui.pause.classList.add('hidden');ui.hud.classList.remove('hidden');previous=performance.now();}}
+function togglePause(forceResume=false){if(state.mode==='playing'&&!forceResume){state.mode='paused';ui.pause.classList.remove('hidden');ui.hud.classList.add('hidden');ui.transmission.classList.add('hidden');}else if(state.mode==='paused'){state.mode='playing';ui.pause.classList.add('hidden');ui.hud.classList.remove('hidden');if(state.messageTimer>0)ui.transmission.classList.remove('hidden');previous=performance.now();}}
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}
-window.addEventListener('keydown',(e)=>{state.keys[e.code]=true;if(e.code==='Enter'&&state.mode==='title'){startAudio();resetGame();}if(e.code==='Space'){e.preventDefault();shoot();}if(e.code==='KeyG'||e.code==='KeyB')glitchPulse();if((e.code==='ShiftLeft'||e.code==='ShiftRight')&&state.dashCooldown<=0&&state.mode==='playing'){state.dashCooldown=1.15;state.invulnerable=.28;tone(180,.15,'sawtooth',.025,280);}if(e.code==='KeyP')togglePause();if(e.code==='KeyF')toggleFullscreen();if(e.code==='KeyR'&&(state.mode==='gameover'||state.mode==='won'))resetGame();});
+window.addEventListener('keydown',(e)=>{state.keys[e.code]=true;if(e.code==='Enter'){if(state.mode==='title'){startAudio();resetGame();return;}if(state.mode==='playing'||state.mode==='paused'){togglePause();return;}if(state.mode==='gameover'||state.mode==='won'){resetGame();return;}}if(e.code==='Space'){e.preventDefault();shoot();}if(e.code==='KeyG'||e.code==='KeyB')glitchPulse();if((e.code==='ShiftLeft'||e.code==='ShiftRight')&&state.dashCooldown<=0&&state.mode==='playing'){state.dashCooldown=1.15;state.invulnerable=.28;tone(180,.15,'sawtooth',.025,280);}if(e.code==='KeyP')togglePause();if(e.code==='KeyF')toggleFullscreen();if(e.code==='KeyR'&&(state.mode==='gameover'||state.mode==='won'))resetGame();});
 window.addEventListener('keyup',(e)=>state.keys[e.code]=false);renderer.domElement.addEventListener('pointerdown',()=>{startAudio();shoot();});
 $('#start-btn').addEventListener('click',()=>{startAudio();resetGame();});$('#restart-btn').addEventListener('click',()=>{startAudio();resetGame();});$('#resume-btn').addEventListener('click',()=>togglePause(true));$('#restart-pause-btn').addEventListener('click',resetGame);
 
