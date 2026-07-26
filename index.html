@@ -12,10 +12,10 @@
       <div id="scene" aria-hidden="true"></div>
 
       <section id="title-screen" class="panel title-screen">
-        <p class="eyebrow">POLYBIUS ARCHIVE // INCIDENT 07</p>
+        <p class="eyebrow">NIGHT ARCADE // CABINET BREACH 01</p>
         <h1><span>GLITCH</span><br />INVADERS</h1>
-        <p class="lede">The cabinets learned each other’s rules.<br />Now the arcade is learning yours.</p>
-        <button id="start-btn" class="primary">BREACH THE ARCADE</button>
+        <p class="lede">Nine cabinets. Twenty-seven escalating levels. Each machine ruptures the room and drags you inside its world.</p>
+        <button id="start-btn" class="primary">RUPTURE THE FIRST CABINET</button>
         <div class="controls">
           <span><b>WASD</b> MOVE</span><span><b>SPACE / CLICK</b> FIRE</span>
           <span><b>Q / E · R-STICK</b> TURN</span><span><b>SHIFT</b> DASH</span>
@@ -28,7 +28,7 @@
       <section id="hud" class="hud hidden" aria-live="polite">
         <div class="hud-top">
           <div class="stat"><small>INTEGRITY</small><div class="meter"><i id="health-fill"></i></div></div>
-          <div class="sector"><small id="phase-label">BREACH 01</small><strong id="phase-name">MAZE LEAK</strong></div>
+          <div class="sector"><small id="phase-label">WORLD 01 // LEVEL 1</small><strong id="phase-name">VOID INVADERS</strong></div>
           <div class="score"><small>SCORE</small><strong id="score-value">000000</strong></div>
         </div>
         <div class="crosshair"><i></i></div>
@@ -39,11 +39,19 @@
           <div class="glitch-ring" id="glitch-ring"><span id="glitch-value">0</span></div>
         </div>
         <div class="objective" id="objective">PURGE THE MAZE SIGNAL</div>
+        <div class="world-track"><small>ARCADE OVERRIDE</small><div id="world-progress" class="world-progress"></div><b id="level-value">1/3</b></div>
         <div class="control-ribbon" id="control-ribbon">
           <span><kbd>WASD</kbd> MOVE</span><span><kbd>SPACE</kbd> FIRE</span>
           <span><kbd>Q E</kbd> TURN</span><span><kbd>G</kbd> PULSE</span>
         </div>
         <button id="help-chip" class="help-chip" type="button">H // CONTROLS</button>
+      </section>
+
+      <section id="world-intro" class="world-intro hidden" aria-live="assertive">
+        <div class="world-intro-line"></div>
+        <p id="world-number">CABINET 01 // REALITY TAKEOVER</p>
+        <h2 id="world-title">VOID INVADERS</h2>
+        <div class="world-rule"><span>RULESET</span><strong id="world-rule">Break the descending alien fleet before it reaches the arcade floor.</strong></div>
       </section>
 
       <section id="tutorial" class="tutorial hidden" aria-live="assertive">
@@ -59,11 +67,12 @@
       <section id="control-manual" class="control-manual hidden">
         <div class="manual-head"><span>FIELD MANUAL // LIVE INPUT</span><button id="close-help" type="button">CLOSE ×</button></div>
         <div class="manual-grid">
-          <article><kbd>WASD</kbd><b>MOVE</b><p>Strafe across the arena. XR uses the left thumbstick.</p></article>
+          <article><kbd>WASD</kbd><b>MOVE</b><p>Walk each world. XR supports physical movement and the left thumbstick.</p></article>
           <article><kbd>Q E / R-STICK</kbd><b>ROTATE BODY</b><p>Turn your body and weapon heading. XR uses the right thumbstick.</p></article>
           <article><kbd>SPACE</kbd><b>FIRE</b><p>Hold Space, click, or squeeze either XR trigger.</p></article>
           <article><kbd>SHIFT</kbd><b>DASH</b><p>Burst through danger with brief invulnerability.</p></article>
           <article><kbd>G</kbd><b>GLITCH PULSE</b><p>At 100 charge, erase nearby threats and damage bosses.</p></article>
+          <article><kbd>OBJECTIVE</kbd><b>READ THE WORLD</b><p>Shoot in combat worlds. Cross traffic and jungle worlds. Claim cubes in the final temple.</p></article>
           <article><kbd>P / ENTER</kbd><b>PAUSE</b><p>Suspend or resume the current breach.</p></article>
           <article><kbd>F</kbd><b>FULLSCREEN</b><p>Toggle the desktop simulation display.</p></article>
         </div>

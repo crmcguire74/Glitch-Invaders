@@ -17,6 +17,16 @@ Original prompt: Build a new virtual reality WebXR game called “Glitch Invader
 - Generated an original high-resolution obsidian circuit-maze texture with the built-in image generation path, saved it as `public/assets/corruption-circuit-v1.png`, and applied it to PBR reactor walls, side walls, and arcade cabinet cladding.
 - Rebuilt player, vehicle, falling-block, and cabinet forms with rounded geometry, clearcoat/transmission materials, and more detailed silhouettes.
 - Rebuilt the serpent boss as a layered biomechanical creature with circuit-mapped armor, inset eye sockets, snout/jaw/teeth, a five-spike crown, fourteen articulated armored segments, emissive segment rings, and a live energy spine.
+- Increased serpent armor readability with brighter violet physical materials and a local boss light so the detail remains visible against the corrupted arcade walls.
+- Deterministic XR-input simulation verified body-relative locomotion and dual-stick steering: the left stick moved the player to `(3.08, 1.41)`, the right stick rotated the rig to `-85.7°`, and the next shot inherited the rotated heading at `(17.9, -2.1)` velocity.
+- Final browser regression reached the victory state with the upgraded scene (`score: 15000`, boss defeated), produced no console/page errors, and confirmed directional shots, tutorial bypass fixtures, and the full end-state presentation.
+- Final pause regression reported `mode: paused` with a clean browser error log after the movement and rendering changes.
+- Iteration 4 rebuild: replaced the five generic mashup phases with nine cabinet worlds and three escalating levels per world (27 total): formation invasion, asteroid survival, river/traffic crossing, centipede bio-hive, tavern lane defense, underground hunt, jungle traversal, champion brawls, and cube-temple capture.
+- Added cabinet rupture transitions: the active machine energizes, throws 3D metal/emissive shards into the room, opens a layered portal, and fades a new panoramic environment around the still-visible physical arcade.
+- Rebuilt the cabinet model with an extruded curved silhouette, laminate side art, curved transmissive CRT glass, illuminated marquee, speaker perforations, metal control deck, joystick/buttons, coin doors, fasteners, T-molding-inspired edge construction, and local screen lighting.
+- Added detailed enemy families for every world: armored biomechanical invaders, crystal-veined deformed asteroids, wheeled road vehicles, an articulated brood centipede, humanoid patrons, drill-armored burrowers, articulated jungle beasts, humanoid champions, and illuminated void hoppers.
+- Generated nine original high-resolution cinematic environment plates (space, asteroid field, river city, bio-hive, tavern, cavern, jungle, neon street, cube temple) and integrated them as curved world shells with world-specific 3D scenery, materials, particles, fog, and lighting.
+- The first production build of the nine-world architecture passes; visual and gameplay regression is next.
 
 ## TODO
 - Hardware-only follow-up: check comfort, scale, and controller feel in the intended WebXR headset; immersive sessions are not available in the headless test environment.
