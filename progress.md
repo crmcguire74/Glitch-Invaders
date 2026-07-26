@@ -13,6 +13,10 @@ Original prompt: Build a new virtual reality WebXR game called “Glitch Invader
 - Visual upgrade pass: animated signal-floor shader, dimensional reactor with kinetic rings/shards, architectural cabinet bays, animated corruption conduits, higher-detail cabinets, engine flames/shield, richer ghosts/cars/blocks/pinballs/serpent geometry, and a vignette/chromatic/grain cinema pass.
 - Added a headset-visible 3D calibration panel and two-controller trigger rays so instructions are not limited to desktop DOM overlays.
 - Final visual reviews covered the title, tutorial, field manual, every genre phase, pause, game-over, and victory screens. WASD movement reached `x=-6.96`; pointer-start + focused movement reached `x=-2.45`; firing damaged the boss; the tutorial completed into live combat; no console/page errors were produced.
+- Iteration 3: added body-relative left-stick/WASD walking, smooth right-stick body rotation with Q/E desktop parity, rig-relative XR orientation, and body/controller-directed projectile vectors.
+- Generated an original high-resolution obsidian circuit-maze texture with the built-in image generation path, saved it as `public/assets/corruption-circuit-v1.png`, and applied it to PBR reactor walls, side walls, and arcade cabinet cladding.
+- Rebuilt player, vehicle, falling-block, and cabinet forms with rounded geometry, clearcoat/transmission materials, and more detailed silhouettes.
+- Rebuilt the serpent boss as a layered biomechanical creature with circuit-mapped armor, inset eye sockets, snout/jaw/teeth, a five-spike crown, fourteen articulated armored segments, emissive segment rings, and a live energy spine.
 
 ## TODO
 - Hardware-only follow-up: check comfort, scale, and controller feel in the intended WebXR headset; immersive sessions are not available in the headless test environment.

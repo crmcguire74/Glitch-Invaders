@@ -14,6 +14,7 @@ Open the printed local URL. When an immersive WebXR headset is available, an **E
 ## Controls
 
 - `WASD` / arrow keys — move
+- `Q` / `E` — rotate body and weapon heading
 - `Space` / click / XR trigger — fire
 - `Shift` — dash
 - `G` — release a fully charged glitch pulse
@@ -22,7 +23,7 @@ Open the printed local URL. When an immersive WebXR headset is available, an **E
 - `F` — toggle fullscreen
 - `R` — restart after a completed run
 
-In WebXR, use the left thumbstick to move, either trigger to fire, and a face button to dash. A headset-visible calibration panel appears before enemies spawn.
+In WebXR, walk physically within your guardian or use the left thumbstick for body-relative locomotion. The right thumbstick rotates your body, either trigger fires along its aim, and a face button dashes. A headset-visible calibration panel appears before enemies spawn.
 
 ## Build
 
