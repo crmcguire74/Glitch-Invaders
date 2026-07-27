@@ -27,6 +27,10 @@ Original prompt: Build a new virtual reality WebXR game called “Glitch Invader
 - Added detailed enemy families for every world: armored biomechanical invaders, crystal-veined deformed asteroids, wheeled road vehicles, an articulated brood centipede, humanoid patrons, drill-armored burrowers, articulated jungle beasts, humanoid champions, and illuminated void hoppers.
 - Generated nine original high-resolution cinematic environment plates (space, asteroid field, river city, bio-hive, tavern, cavern, jungle, neon street, cube temple) and integrated them as curved world shells with world-specific 3D scenery, materials, particles, fog, and lighting.
 - The first production build of the nine-world architecture passes; visual and gameplay regression is next.
+- Browser visual review confirmed the cabinet-focused rupture camera, expanding portal rings, ejected CRT shards, lazy-loaded panoramic world takeover, detailed formation drones, wet river lanes/traffic/logs, fungal barricades and articulated brood bosses, close-camera neon champion arena, and the cube-temple capture layout.
+- Crossing interaction regression reached the far bank, awarded 900 points, reset the player safely, and entered `levelclear`; this verifies the movement-driven world does not rely on shooting. Enemy/obstacle kills in crossing, jungle, and cube worlds no longer advance those traversal objectives.
+- Formation combat regression verified projectile collision, enemy removal, score (+180), glitch charge (+9), and combo progression. Pause reported a stable `paused` state with enemies preserved and no console/page errors.
+- Simulated WebXR regression verified left-stick body-relative locomotion, right-stick body rotation (`-65°`), and a body-relative projectile vector (`65.1, -30.7`) after turning.
 
 ## TODO
 - Hardware-only follow-up: check comfort, scale, and controller feel in the intended WebXR headset; immersive sessions are not available in the headless test environment.
