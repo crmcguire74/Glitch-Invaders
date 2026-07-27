@@ -11,18 +11,34 @@
     <main id="app" aria-label="Glitch Invaders game">
       <div id="scene" aria-hidden="true"></div>
 
-      <section id="title-screen" class="panel title-screen">
-        <p class="eyebrow">NIGHT ARCADE // CABINET BREACH 01</p>
-        <h1><span>GLITCH</span><br />INVADERS</h1>
-        <p class="lede">Nine cabinets. Twenty-seven escalating levels. Each machine ruptures the room and drags you inside its world.</p>
-        <button id="start-btn" class="primary">RUPTURE THE FIRST CABINET</button>
-        <div class="controls">
-          <span><b>WASD</b> MOVE</span><span><b>SPACE / CLICK</b> FIRE</span>
-          <span><b>Q / E · R-STICK</b> TURN</span><span><b>SHIFT</b> DASH</span>
-          <span><b>G</b> GLITCH PULSE</span><span><b>H</b> FIELD MANUAL</span>
-          <span><b>P</b> PAUSE</span><span><b>F</b> FULLSCREEN</span>
+      <section id="title-screen" class="title-screen">
+        <div class="title-ghost" aria-hidden="true">GI</div>
+        <div class="title-copy">
+          <div class="eyebrow"><i></i><span>NIGHT ARCADE // ACTIVE REALITY BREACH</span><b>01</b></div>
+          <h1><span>GLITCH</span><br />INVADERS</h1>
+          <p class="title-tag">THE MACHINES ARE NO LONGER WAITING FOR PLAYERS.</p>
+          <p class="lede">Stand inside nine collapsing arcade worlds. Master twenty-seven escalating levels before every cabinet escapes its screen.</p>
+          <div class="title-actions">
+            <button id="start-btn" class="primary"><small>BEGIN CAMPAIGN</small><strong>RUPTURE CABINET 01</strong><i>↗</i></button>
+            <div class="run-spec"><span><b>09</b> WORLDS</span><span><b>27</b> LEVELS</span><span><b>∞</b> BREACHES</span></div>
+          </div>
         </div>
-        <p id="xr-note">Desktop simulation ready. Headset support will appear when WebXR is available.</p>
+        <aside class="campaign-card">
+          <div class="campaign-head"><span>OVERRIDE ROUTE</span><b>01 / 09</b></div>
+          <div class="campaign-route" aria-label="Nine world campaign route">
+            <span class="active"><i>01</i><b>VOID</b></span><span><i>02</i><b>RIFT</b></span><span><i>03</i><b>RIVER</b></span>
+            <span><i>04</i><b>HIVE</b></span><span><i>05</i><b>BAR</b></span><span><i>06</i><b>DEEP</b></span>
+            <span><i>07</i><b>RUIN</b></span><span><i>08</i><b>DUEL</b></span><span><i>09</i><b>CUBE</b></span>
+          </div>
+          <p>Each cabinet has a distinct rule. Clear level three to force the next machine onto the breach stage.</p>
+        </aside>
+        <div class="title-footer">
+          <div class="controls">
+            <span><b>WASD / L-STICK</b> MOVE</span><span><b>Q E / R-STICK</b> TURN</span>
+            <span><b>SPACE / TRIGGER</b> FIRE</span><span><b>SHIFT</b> DASH</span><span><b>G</b> PULSE</span>
+          </div>
+          <p id="xr-note">DESKTOP LINK READY // CONNECT A WEBXR HEADSET FOR ROOM-SCALE PLAY</p>
+        </div>
       </section>
 
       <section id="hud" class="hud hidden" aria-live="polite">
@@ -52,6 +68,7 @@
         <p id="world-number">CABINET 01 // REALITY TAKEOVER</p>
         <h2 id="world-title">VOID INVADERS</h2>
         <div class="world-rule"><span>RULESET</span><strong id="world-rule">Break the descending alien fleet before it reaches the arcade floor.</strong></div>
+        <div class="rupture-meter"><i id="rupture-progress"></i><span id="rupture-status">LOCKING CABINET SIGNAL</span><b id="rupture-countdown">3.6</b></div>
       </section>
 
       <section id="tutorial" class="tutorial hidden" aria-live="assertive">

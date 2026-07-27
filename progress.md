@@ -31,6 +31,15 @@ Original prompt: Build a new virtual reality WebXR game called “Glitch Invader
 - Crossing interaction regression reached the far bank, awarded 900 points, reset the player safely, and entered `levelclear`; this verifies the movement-driven world does not rely on shooting. Enemy/obstacle kills in crossing, jungle, and cube worlds no longer advance those traversal objectives.
 - Formation combat regression verified projectile collision, enemy removal, score (+180), glitch charge (+9), and combo progression. Pause reported a stable `paused` state with enemies preserved and no console/page errors.
 - Simulated WebXR regression verified left-stick body-relative locomotion, right-stick body rotation (`-65°`), and a body-relative projectile vector (`65.1, -30.7`) after turning.
+- Iteration 5 corrected the reported empty-arcade progression failure: world-one level quotas were 11/14/17 while formations spawned 10/12/14. Quotas now exactly match the formation sizes at 10/12/14, with an automated three-level campaign-transition hook for regression testing.
+- Rebuilt the attract screen as a full-screen cinematic campaign briefing with a live 3D STAR LEGION cabinet, typographic hero, nine-world route map, run specifications, premium CTA, and compact control rail.
+- Made cabinet takeovers deterministic and legible: the active machine now moves from its aisle to a central breach stage directly ahead of the player, the UI names each rupture step and shows a countdown/progress bar, and immersive WebXR sessions receive the same instructions on an in-world panel.
+- Removed the unexplained glowing arena torus and cleared residual cabinet portal rings at the end of transitions.
+- Rebuilt first-world combat around an airborne formation at y=2.3–3.6, ascending player fire, 3/4/5-hit enemies across levels, increased return fire, faster formation movement, and level-two/three dive attacks.
+- Visual review confirmed the new attract screen, explicit cabinet rupture, removed arc/ring artifacts, and a complete 10-enemy airborne formation whose level-one quota now matches its spawn count.
+- Final launch-flow captures confirmed a clean movement calibration card (no overlapping transmission), a deterministic movement-then-fire sequence that spawns the fleet only after both instructions are completed, and an explicit `RULESET MASTERED / NEXT LEVEL MATERIALIZING` countdown after completion.
+- Normal-difficulty state confirms 10 enemies for quota 10, airborne y positions from 2.3–3.6, and 3 HP per level-one drone. Direct three-level progression regression completed worlds 1.1, 1.2, and 1.3 and entered ASTEROID RIFT level 1 with an active asteroid spawn.
+- Direct pointer-event regression verified the redesigned landing CTA immediately enters `transition` and reports the pending cabinet instead of remaining on the title. Final pause regression is clean with the airborne formation preserved and no browser/page error log.
 
 ## TODO
 - Hardware-only follow-up: check comfort, scale, and controller feel in the intended WebXR headset; immersive sessions are not available in the headless test environment.
